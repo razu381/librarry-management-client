@@ -62,7 +62,15 @@ function BorrowForm() {
       }
     } catch (err: any) {
       console.log("There has been an error Borrowing the book: ", err);
-      toast.error("There has been an error", err?.data?.message);
+      let errorMessage = "An error occurred while borrowing.";
+
+      if (err?.data?.message) {
+        errorMessage = err.data.message;
+      } else if (err?.message) {
+        errorMessage = err.message;
+      }
+
+      toast.error(errorMessage);
     }
   };
 
@@ -75,11 +83,14 @@ function BorrowForm() {
   }
 
   if (error) {
-    return (
-      <div className="flex justify-center items-center h-64 text-red-600">
-        Error: {"An error occurred while borrowing."}
-      </div>
-    );
+    let errorMessage = "An error occurred while borrowing.";
+
+    if ("data" in error && error.data && typeof error.data === "object") {
+      const errorData = error.data as any;
+      errorMessage = errorData.message || errorMessage;
+    } else if ("message" in error) {
+      errorMessage = error.message || errorMessage;
+    }
   }
 
   return (
