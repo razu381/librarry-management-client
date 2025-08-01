@@ -24,8 +24,7 @@ function BookTable() {
   let { data: booksData, error, isLoading } = useGetBooksQuery();
   console.log(booksData);
 
-  let [deleteBook, { isSuccess: isDeleteSuccessfull }] =
-    useDeleteBookMutation();
+  let [deleteBook] = useDeleteBookMutation();
 
   const columnHelper = createColumnHelper<IBook>();
 
@@ -81,8 +80,9 @@ function BookTable() {
               Edit
             </Link>
             <button
-              onClick={() => handleDeleteBook(bookId)}
+              onClick={() => bookId && handleDeleteBook(bookId)}
               className="text-red-600"
+              disabled={!bookId}
             >
               Delete
             </button>
@@ -128,7 +128,24 @@ function BookTable() {
     return <div>Loading...</div>;
   }
   if (error) {
-    return <div>Error: {error?.message}</div>;
+    let errorMessage = "An error occurred";
+    if ("status" in error) {
+      // FetchBaseQueryError
+      if (typeof error.data === "string") {
+        errorMessage = error.data;
+      } else if (
+        typeof error.data === "object" &&
+        error.data !== null &&
+        "message" in error.data
+      ) {
+        errorMessage =
+          (error.data as { message?: string }).message || errorMessage;
+      }
+    } else if ("message" in error) {
+      // SerializedError
+      errorMessage = error.message as string;
+    }
+    return <div>Error: {errorMessage}</div>;
   }
   return (
     <div className="rounded-md border">

@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Calendar } from "@/components/ui/calendar";
 import { CalendarIcon } from "lucide-react";
@@ -77,7 +77,7 @@ function BorrowForm() {
   if (error) {
     return (
       <div className="flex justify-center items-center h-64 text-red-600">
-        Error: {error?.data?.message || "An error occurred while borrowing."}
+        Error: {"An error occurred while borrowing."}
       </div>
     );
   }

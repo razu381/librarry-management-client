@@ -6,8 +6,8 @@ export interface IBorrow {
 
 export interface borrowApiResponse {
   success: boolean;
-  message: string;
-  data: IBorrow[];
+  message?: string;
+  data: IBookSummary[];
 }
 
 export interface IBookSummary {

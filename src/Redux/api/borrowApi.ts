@@ -1,9 +1,12 @@
-import type { borrowApiResponse, IBorrow } from "@/interfaces/borrow interface";
+import type {
+  borrowApiResponse,
+  IBookSummary,
+} from "@/interfaces/borrow interface";
 import { baseApi } from "./baseApi";
 
 export const borrowApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    borrowSummary: builder.query<IBorrow[], void>({
+    borrowSummary: builder.query<IBookSummary[], void>({
       query: () => "borrow/",
       transformResponse: (response: borrowApiResponse) => response?.data,
       providesTags: ["BorrowSummary"],

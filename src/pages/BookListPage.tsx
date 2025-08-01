@@ -1,5 +1,4 @@
 import BookTable from "@/components/book/BookTable";
-import { useGetBooksQuery } from "@/Redux/api/booksApi";
 
 function BookListPage() {
   // let { data } = useGetBooksQuery();

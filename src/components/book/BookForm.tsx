@@ -34,7 +34,14 @@ import { useNavigate } from "react-router";
 const bookSchema = z.object({
   title: z.string().min(1, "Title is required"),
   author: z.string().min(4, "Author must be at least 10 characters"),
-  genre: z.string().min(1, "Genre is required"),
+  genre: z.enum([
+    "FICTION",
+    "NON_FICTION",
+    "SCIENCE",
+    "HISTORY",
+    "BIOGRAPHY",
+    "FANTASY",
+  ]),
   isbn: z.string().min(1, "ISBN is required"),
   description: z.string().min(10, "Description must be at least 10 characters"),
   copies: z.number().int("Copies must be a whole number"),
@@ -49,32 +56,20 @@ type BookFormProps = {
 
 function BookForm({ id }: BookFormProps) {
   let navigate = useNavigate();
-  let {
-    data: postData,
-    isLoading: isBookDataLoading,
-    isError: isBookDataError,
-  } = useGetBookByIdQuery(id, {
+  let { data: postData } = useGetBookByIdQuery(id ?? "", {
     skip: !id,
   });
 
   //console.log("Postdata: ", postData?.data);
-  let [addBook, { isAddLoading: isBookAddLoading, isError: isAddBookError }] =
-    useAddBookMutation();
-  let [
-    editBook,
-    {
-      isLoading: isBookEditLoading,
-      isError: isEditBookError,
-      isSuccess: isEditBookSuccess,
-    },
-  ] = useEditBookMutation();
+  let [addBook] = useAddBookMutation();
+  let [editBook, { isSuccess: isEditBookSuccess }] = useEditBookMutation();
 
   const form = useForm<BookFormDataType>({
     resolver: zodResolver(bookSchema),
     defaultValues: {
       title: "",
       author: "",
-      genre: "",
+      genre: undefined,
       isbn: "",
       description: "",
       copies: 0,

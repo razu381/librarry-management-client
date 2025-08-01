@@ -1,15 +1,15 @@
 import { useGetBookByIdQuery } from "@/Redux/api/booksApi";
 import { useParams } from "react-router";
 
-function formatDate(dateString?: string) {
-  if (!dateString) return "-";
-  const date = new Date(dateString);
-  return date.toLocaleDateString() + " " + date.toLocaleTimeString();
-}
-
 function BookDetailPage() {
   const { id } = useParams<{ id: string }>();
-  const { data: book, isLoading, isError } = useGetBookByIdQuery(id);
+  const {
+    data: book,
+    isLoading,
+    isError,
+  } = useGetBookByIdQuery(id ?? "", {
+    skip: !id,
+  });
   console.log(book);
 
   if (isLoading) {
@@ -70,14 +70,6 @@ function BookDetailPage() {
             </div>
           </div>
           <div className="flex flex-col gap-1 text-xs text-gray-400 mt-8">
-            <div>
-              Created:{" "}
-              <span className="font-mono">{formatDate(book?.createdAt)}</span>
-            </div>
-            <div>
-              Last Updated:{" "}
-              <span className="font-mono">{formatDate(book?.updatedAt)}</span>
-            </div>
             <div>
               Book ID: <span className="font-mono text-xs">{book._id}</span>
             </div>

@@ -1,10 +1,10 @@
-import type { IBookSummary } from "@/interfaces/borrow interface";
 import { useBorrowSummaryQuery } from "@/Redux/api/borrowApi";
 
 // Interface for a single book summary card
 
 function BorrowSummaryPage() {
   const { data, isLoading, isError } = useBorrowSummaryQuery();
+  console.log(data);
 
   if (isLoading) return <div className="text-center py-8">Loading...</div>;
   if (isError)
@@ -19,9 +19,9 @@ function BorrowSummaryPage() {
       <h2 className="text-2xl font-bold mb-6 text-center">Borrow Summary</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {data ? (
-          data.map((item, idx) => (
+          data.map((item) => (
             <div
-              key={item.book.isbn + idx}
+              key={item.book.isbn}
               className="bg-white shadow-md rounded-lg p-6 flex flex-col items-start border border-gray-100 hover:shadow-lg transition-shadow"
             >
               <h3 className="text-lg font-semibold mb-2">{item.book.title}</h3>
