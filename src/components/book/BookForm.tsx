@@ -85,22 +85,30 @@ function BookForm({ id }: BookFormProps) {
 
   async function onSubmit(data: BookFormDataType) {
     //console.log(data);
-    try {
-      if (id) {
+
+    if (id) {
+      try {
         console.log("Editing book with id:", id);
         await editBook({ id, data }).unwrap();
         if (isEditBookSuccess) {
           toast.success("Book updated successfully");
         }
-      } else {
+      } catch (err: any) {
+        console.log("err", err);
+        console.log("err.data.errors", err?.data?.errors);
+        toast.error("There has been an error", err?.message);
+      }
+    } else {
+      try {
         await addBook(data).unwrap();
         toast.success("Book added successfully");
         form.reset();
         navigate("/books");
+      } catch (err: any) {
+        console.log("err", err);
+        console.log("err.data.errors", err?.data?.errors);
+        toast.error("There has been an error", err?.message);
       }
-    } catch (err: any) {
-      console.log(err);
-      toast.error("There has been an error", err?.message);
     }
   }
 
