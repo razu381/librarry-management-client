@@ -12,7 +12,7 @@ const routes = createBrowserRouter([
     path: "/",
     element: <Layout />,
     children: [
-      { path: "books", element: <BookListPage /> },
+      { index: true, element: <BookListPage /> },
       { path: "create-book", element: <CreateBookPage /> },
       { path: "books/:id", element: <BookDetailPage /> },
       { path: "edit-book/:id", element: <EditBookPage /> },

@@ -19,7 +19,7 @@ import logo from "../../assets/logo.png";
 import { Link } from "react-router";
 
 const navLinks = [
-  { to: "/books", label: "All books" },
+  { to: "/", label: "All books" },
   { to: "/create-book", label: "Add Book" },
   { to: "/borrow-summary", label: "Borrow Summary" },
 ];
@@ -28,7 +28,7 @@ function Navbar() {
   return (
     <header className="p-4 border-b">
       <div className="container mx-auto flex items-center justify-between">
-        <Link to={"/home"}>
+        <Link to={"/"}>
           <img src={logo} alt="logo" className="max-w-44" />
         </Link>
 
