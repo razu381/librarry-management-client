@@ -12,7 +12,6 @@ const routes = createBrowserRouter([
     path: "/",
     element: <Layout />,
     children: [
-      { path: "/", element: <BookListPage /> }, // Default route
       { path: "books", element: <BookListPage /> },
       { path: "create-book", element: <CreateBookPage /> },
       { path: "books/:id", element: <BookDetailPage /> },
